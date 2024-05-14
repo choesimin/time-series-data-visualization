@@ -92,7 +92,7 @@ const BarChart: React.FC<BarChartProps> = ({
           xAxis={[
             {
               scaleType: "band",
-              data: findLongestArray(sumDataset).map((sumDatum) =>
+              data: findLongestArray<SumDatum>(sumDataset).map((sumDatum) =>
                 dayjs(sumDatum.date)
               ),
               valueFormatter: (date) => formatDate(dayjs(date), mode),

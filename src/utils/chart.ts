@@ -50,9 +50,9 @@ function sumData(
   return Object.values(result);
 }
 
-export function findLongestArray(arrays: any[][]): any[];
-export function findLongestArray(arrays: any[][][]): any[];
-export function findLongestArray(arrays: any[][] | any[][][]): any[] {
+export function findLongestArray<T>(arrays: T[][]): T[];
+export function findLongestArray<T>(arrays: T[][][]): T[];
+export function findLongestArray<T>(arrays: T[][] | T[][][]): T[] {
   if (arrays.length === 0) return [];
 
   if (Array.isArray(arrays[0][0])) {

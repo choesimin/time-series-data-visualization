@@ -84,7 +84,7 @@ const LineChart: React.FC<LineChartProps> = ({
           xAxis={[
             {
               scaleType: "time",
-              data: findLongestArray(sumDataset).map((sumDatum) =>
+              data: findLongestArray<SumDatum>(sumDataset).map((sumDatum) =>
                 dayjs(sumDatum.date)
               ),
               valueFormatter: (date) => formatDate(dayjs(date), mode),
