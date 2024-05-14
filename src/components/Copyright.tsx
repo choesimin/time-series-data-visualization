@@ -12,11 +12,11 @@ export default function Copyright() {
         marginY: 5,
       }}
     >
-      {"Copyright © "}
-      <Link color="inherit" href="http://www.paymint.co.kr">
-        Paymint
-      </Link>{" "}
-      {new Date().getFullYear()}.
+      {`Copyright ${new Date().getFullYear()}. `}
+      <Link color="inherit" href="https://www.simin.im">
+        최시민
+      </Link>
+      {" all rights reserved."}
     </Typography>
   );
 }
