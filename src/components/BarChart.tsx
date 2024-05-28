@@ -15,7 +15,7 @@ import {
   fetchDataAndSum,
 } from "@/utils/chart";
 import SumDatum from "@/types/SumDatum";
-import { Typography } from "@mui/material";
+import { LinearProgress, Typography } from "@mui/material";
 import ChartProps from "@/types/ChartProps";
 
 export interface BarChartProps extends ChartProps {
@@ -30,7 +30,7 @@ const BarChart: React.FC<BarChartProps> = ({
 }) => {
   const [date, setDate] = useState<Dayjs | null>(dayjs());
   const [mode, setMode] = useState<SumMode>(SumMode.DAY);
-
+  const [loading, setLoading] = useState<boolean>(false);
   const [sumDataset, setSumDataset] = useState<SumDatum[][][]>([]);
 
   useEffect(() => {
@@ -38,6 +38,8 @@ const BarChart: React.FC<BarChartProps> = ({
   }, [date, mode]);
 
   async function fetchAndSetSumDataset(date: Dayjs) {
+    setLoading(true);
+
     const [startDate, endDate] = getFetchParams(date, mode);
 
     let newSumDataset: SumDatum[][][] = [];
@@ -56,6 +58,8 @@ const BarChart: React.FC<BarChartProps> = ({
     }
 
     setSumDataset(newSumDataset);
+
+    setLoading(false);
   }
 
   const highlightScope = {
@@ -86,8 +90,19 @@ const BarChart: React.FC<BarChartProps> = ({
         sx={{
           width: "100%",
           padding: "1rem",
+          position: "relative",
         }}
       >
+        {loading && (
+          <LinearProgress
+            sx={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              right: 0,
+            }}
+          />
+        )}
         <MuiBarChart
           xAxis={[
             {

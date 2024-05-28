@@ -15,7 +15,7 @@ import {
   fetchDataAndSum,
 } from "@/utils/chart";
 import SumDatum from "@/types/SumDatum";
-import { Typography } from "@mui/material";
+import { LinearProgress, Typography } from "@mui/material";
 import ChartProps from "@/types/ChartProps";
 
 export interface LineChartProps extends ChartProps {
@@ -30,7 +30,7 @@ const LineChart: React.FC<LineChartProps> = ({
 }) => {
   const [date, setDate] = useState<Dayjs | null>(dayjs());
   const [mode, setMode] = useState<SumMode>(SumMode.DAY);
-
+  const [loading, setLoading] = useState<boolean>(false);
   const [sumDataset, setSumDataset] = useState<SumDatum[][]>([]);
 
   useEffect(() => {
@@ -38,6 +38,8 @@ const LineChart: React.FC<LineChartProps> = ({
   }, [date, mode]);
 
   async function fetchAndSetSumDataset(date: Dayjs) {
+    setLoading(true);
+
     const [startDate, endDate] = getFetchParams(date, mode);
 
     let newSumDataset: SumDatum[][] = [];
@@ -53,6 +55,8 @@ const LineChart: React.FC<LineChartProps> = ({
     }
 
     setSumDataset(newSumDataset);
+
+    setLoading(false);
   }
 
   return (
@@ -78,8 +82,19 @@ const LineChart: React.FC<LineChartProps> = ({
         sx={{
           width: "100%",
           padding: "1rem",
+          position: "relative",
         }}
       >
+        {loading && (
+          <LinearProgress
+            sx={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              right: 0,
+            }}
+          />
+        )}
         <MuiLineChart
           xAxis={[
             {
